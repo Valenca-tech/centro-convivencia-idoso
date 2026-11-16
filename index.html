@@ -1,0 +1,523 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Centro de Convivência da Pessoa Idosa · Tema 08 · TRIENG Engenharia e Arquitetura · maquete 3D interativa, pranchas e memorial.">
+<title>Centro de Convivência da Pessoa Idosa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap">
+<style>
+/* Layout: página de projeto em rolagem, faixa superior fixa com navegação; seções numeradas na ordem do método (lugar, programa, partido, projeto, documentos); identidade TRIENG: areia, grafite, laranja pontual, barras inclinadas */
+:root {
+  --bg: #f8f6f2;
+  --areia: #ede8e1;
+  --card: #ffffff;
+  --fg: #2b2b2b;
+  --muted: #6c665f;
+  --line: #e2dcd3;
+  --cinza: #b9b2a9;
+  --accent: #f06a23;
+  --accent-fg: #ffffff;
+  --sky: #e9eef0;
+  --dark: #2b2b2b;
+  --dark-fg: #f8f6f2;
+  --f-display: "Sora", "Segoe UI", system-ui, sans-serif;
+  --f-body: "Inter", "Segoe UI", system-ui, sans-serif;
+}
+:root { color-scheme: light; }
+[hidden] { display: none !important; }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--f-body); font-size: 16px; line-height: 1.6; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--bg); }
+.wrap { max-width: 1180px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1, h2, h3 { font-family: var(--f-display); font-weight: 600; text-wrap: balance; margin: 0; }
+p { margin: 0; }
+a { color: inherit; }
+img { display: block; max-width: 100%; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* topo */
+.topo { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--bg); border-bottom: 1px solid var(--line); }
+.topo::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 3px; background: var(--fg); }
+.topo::after { content: ""; position: absolute; left: 0; top: 0; width: 140px; height: 3px; background: var(--accent); }
+.topo .wrap { display: flex; align-items: center; gap: 20px; padding-block: 12px; }
+.marca { display: flex; align-items: center; gap: 10px; text-decoration: none; flex: none; }
+.marca svg { width: 28px; height: 26px; }
+.marca b { font: 700 1rem var(--f-display); letter-spacing: .18em; }
+.nav { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; min-width: 0; margin-left: auto; }
+.nav::-webkit-scrollbar { display: none; }
+.nav a { text-decoration: none; font: 500 .82rem var(--f-display); color: var(--muted); padding: 6px 10px; border-radius: 4px; white-space: nowrap; }
+.nav a:hover { color: var(--fg); background: var(--areia); }
+
+/* capa */
+.capa { position: relative; background: var(--dark); color: var(--dark-fg); overflow: hidden; }
+.capa-img { position: absolute; inset: 0 0 0 38%; }
+.capa-img img { width: 100%; height: 100%; object-fit: cover; }
+.capa-img::before { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, var(--dark) 0%, transparent 35%); }
+.capa .wrap { position: relative; padding-block: 72px 56px; }
+.capa .txt { max-width: 560px; display: grid; gap: 20px; }
+.pill { justify-self: start; background: var(--accent); color: #fff; font: 600 .72rem var(--f-display); letter-spacing: .2em; padding: 6px 12px; border-radius: 20px; }
+.capa h1 { font-size: clamp(2rem, 5vw, 3.4rem); line-height: 1.05; }
+.capa p.lead { color: #d9d3ca; font-size: 1.08rem; }
+.capa .kpis { display: flex; flex-wrap: wrap; gap: 14px 28px; }
+.capa .kpi { border-left: 3px solid var(--accent); padding-left: 10px; }
+.capa .kpi b { display: block; font: 600 1.35rem var(--f-display); font-variant-numeric: tabular-nums; }
+.capa .kpi small { color: #c9c2b8; font-size: .8rem; }
+.capa .faixa { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 16px; margin-top: 44px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,.18); font-size: .85rem; color: #d9d3ca; }
+.capa .faixa b { display: block; font: 600 .68rem var(--f-display); letter-spacing: .2em; text-transform: uppercase; color: var(--accent); }
+.barras { position: absolute; right: -40px; bottom: -30px; width: 260px; height: 120px; pointer-events: none; }
+@media (max-width: 760px) { .capa-img { inset: 0; opacity: .35; } .capa-img::before { background: none; } }
+
+/* seções */
+section.sec { padding-block: 72px; border-bottom: 1px solid var(--line); scroll-margin-top: 64px; }
+section.sec.alt { background: var(--areia); }
+.cab { display: grid; gap: 10px; max-width: 720px; margin-bottom: 36px; }
+.eb { font: 600 .72rem var(--f-display); letter-spacing: .22em; text-transform: uppercase; color: var(--accent); }
+.cab h2 { font-size: clamp(1.6rem, 3.2vw, 2.3rem); line-height: 1.15; }
+.cab p { color: var(--muted); font-size: 1.02rem; }
+.g2 { display: grid; grid-template-columns: 1.2fr 1fr; gap: 32px; align-items: start; }
+.g2 > * { min-width: 0; }
+@media (max-width: 860px) { .g2 { grid-template-columns: 1fr; } }
+.quadro { background: var(--card); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.quadro img { width: 100%; cursor: zoom-in; }
+.leg { font-size: .8rem; color: var(--muted); padding: 10px 14px; border-top: 1px solid var(--line); }
+.conceito { border-left: 4px solid var(--accent); background: var(--card); padding: 18px 22px; border-radius: 0 8px 8px 0; font: 500 1.25rem/1.4 var(--f-display); }
+.texto { display: grid; gap: 14px; color: var(--fg); }
+.texto p { max-width: 65ch; }
+.decis { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-top: 36px; }
+.decis div { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 18px; display: grid; gap: 6px; align-content: start; }
+.decis b { font: 600 1rem var(--f-display); }
+.decis span { color: var(--muted); font-size: .92rem; }
+.decis i { font: 600 .8rem var(--f-display); color: var(--accent); font-style: normal; }
+table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+th { text-align: left; font: 500 .75rem var(--f-display); letter-spacing: .04em; background: var(--fg); color: var(--bg); padding: 9px 12px; }
+td { padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+td.n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.tabela { overflow-x: auto; background: var(--card); border: 1px solid var(--line); border-radius: 8px; }
+.ok { font: 600 .72rem var(--f-display); color: #2f7d4f; }
+.setores { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+.setor { background: var(--card); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.setor h3 { font-size: .9rem; padding: 12px 14px; display: flex; justify-content: space-between; gap: 10px; border-top: 4px solid var(--c); background: var(--areia); }
+.setor h3 span { color: var(--accent); font-variant-numeric: tabular-nums; }
+.setor table { font-size: .85rem; }
+.setor td { padding: 6px 14px; }
+.setor td.p { color: var(--muted); width: 2.5em; }
+.trio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 24px; }
+.trio > * { min-width: 0; }
+@media (max-width: 860px) { .trio { grid-template-columns: 1fr; } }
+
+/* maquete */
+.maq-sec { padding-block: 20px 36px; background: var(--areia); }
+.maq-cab { margin-bottom: 14px; gap: 6px; max-width: none; }
+.maq-cab h1 { font-size: clamp(1.4rem, 3vw, 2rem); line-height: 1.15; }
+.maq-cab p { font-size: .92rem; }
+.maq-nota a { color: var(--accent); font-weight: 600; text-decoration: none; }
+.maq { position: relative; height: min(calc(100svh - 190px), 820px); min-height: 380px; border-radius: 10px; overflow: hidden; background: var(--sky); border: 1px solid var(--line); }
+.maq canvas { display: block; width: 100%; height: 100%; touch-action: none; }
+.maq .estado { position: absolute; inset: 0; display: grid; place-items: center; color: var(--muted); font: 500 .9rem var(--f-display); letter-spacing: .1em; text-transform: uppercase; text-align: center; padding: 16px; pointer-events: none; }
+.ctl { position: absolute; left: 12px; top: 12px; display: flex; flex-wrap: wrap; gap: 6px; max-width: calc(100% - 24px); }
+.ctl button, .chip { border: 1px solid var(--line); background: var(--card); color: var(--fg); font: 500 .8rem var(--f-display); padding: 6px 11px; border-radius: 20px; cursor: pointer; }
+.ctl button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-fg); }
+.ctl.b { top: auto; bottom: 12px; }
+.ctl.b button[aria-pressed="true"] { background: var(--fg); border-color: var(--fg); color: var(--bg); }
+.maq-nota { font-size: .82rem; color: var(--muted); margin-top: 10px; }
+
+/* ambientes */
+.amb { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 18px; }
+.amb article { background: var(--card); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; display: grid; grid-template-rows: auto 1fr; }
+.amb img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; cursor: zoom-in; background: var(--areia); }
+.amb .c { padding: 14px 16px 18px; display: grid; gap: 8px; align-content: start; }
+.amb .t { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.amb h3 { font-size: 1rem; }
+.amb .a { font: 600 .78rem var(--f-display); color: var(--accent); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.amb p { font-size: .88rem; color: var(--muted); }
+.tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.tag { font: 600 .66rem var(--f-display); letter-spacing: .08em; text-transform: uppercase; padding: 3px 7px; border-radius: 3px; background: var(--areia); color: var(--fg); }
+.tag i { display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: 5px; background: var(--c); }
+.filtros { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+.filtros .chip[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+
+/* galeria */
+.gal { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
+.gal figure { margin: 0; background: var(--card); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.gal img { width: 100%; aspect-ratio: 4 / 3; object-fit: contain; background: #fff; cursor: zoom-in; }
+.gal figcaption { font-size: .85rem; padding: 10px 14px; border-top: 1px solid var(--line); }
+.gal figcaption b { font-family: var(--f-display); font-weight: 600; }
+
+/* pranchas */
+.pr { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
+.pr button { text-align: left; background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 8px; cursor: zoom-in; display: grid; gap: 8px; }
+.pr img { width: 100%; aspect-ratio: 1.414; object-fit: contain; background: #fff; border: 1px solid var(--line); }
+.pr .k { display: flex; justify-content: space-between; gap: 8px; font: 600 .8rem var(--f-display); }
+.pr .k span { color: var(--muted); font-weight: 500; }
+.pr .d { font-size: .82rem; color: var(--muted); line-height: 1.35; padding: 0 2px 4px; }
+
+/* documentos */
+.docs { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; }
+.doc { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 20px; display: grid; gap: 8px; text-decoration: none; position: relative; overflow: hidden; }
+.doc::after { content: ""; position: absolute; right: -18px; top: -18px; width: 56px; height: 56px; background: var(--accent); transform: rotate(45deg); }
+.doc b { font: 600 1.02rem var(--f-display); }
+.doc small { color: var(--muted); font-size: .85rem; }
+.doc span { font: 600 .8rem var(--f-display); color: var(--accent); }
+
+/* rodapé */
+footer { background: var(--dark); color: var(--dark-fg); padding-block: 56px 40px; }
+footer .wrap { display: grid; gap: 28px; }
+footer h2 { font-size: 1.6rem; }
+footer h2 em { font-style: normal; color: var(--accent); }
+.equipe { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0; border-block: 1px solid rgba(255,255,255,.16); }
+.equipe div { padding: 16px 0; }
+.equipe small { display: block; font: 600 .66rem var(--f-display); letter-spacing: .2em; color: var(--cinza); text-transform: uppercase; }
+.equipe b { font: 500 1rem var(--f-display); }
+footer p { color: #c9c2b8; font-size: .85rem; }
+
+/* visualizador */
+.lb { position: fixed; inset: 0; z-index: 50; background: rgba(20, 19, 18, .94); display: grid; grid-template-rows: auto minmax(0, 1fr); padding: max(12px, env(safe-area-inset-top, 0px)) max(12px, env(safe-area-inset-right, 0px)) max(12px, env(safe-area-inset-bottom, 0px)) max(12px, env(safe-area-inset-left, 0px)); }
+.lb .bar { display: flex; align-items: center; gap: 10px; color: #f1ede7; padding-bottom: 10px; }
+.lb .bar p { flex: 1; font-size: .9rem; min-width: 0; }
+.lb .bar button { background: #3a3733; border: 0; color: #f1ede7; font: 500 .85rem var(--f-display); padding: 8px 12px; border-radius: 6px; cursor: pointer; }
+.lb .vp { overflow: auto; display: grid; place-items: center; touch-action: pan-x pan-y pinch-zoom; }
+.lb .vp img { max-width: 100%; max-height: 100%; object-fit: contain; cursor: zoom-in; }
+.lb .vp.zoom { place-items: start; }
+.lb .vp.zoom img { max-width: none; max-height: none; width: 220%; cursor: zoom-out; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+html { scroll-behavior: smooth; }
+</style>
+<style>body{margin:0}</style>
+</head>
+<body>
+
+
+<header class="topo">
+  <div class="wrap">
+    <a class="marca" href="#maquete" aria-label="Início">
+      <svg viewBox="0 0 28 26" aria-hidden="true"><path d="M14 1 27 25H1Z" fill="var(--fg)"/><path d="M8.5 14h11v3.2h-3.8V25h-3.4v-7.8H8.5Z" fill="var(--bg)"/><path d="M16 6.5l3.2 5.6" stroke="var(--accent)" stroke-width="2.6"/></svg>
+      <b>TRIENG</b>
+    </a>
+    <nav class="nav" aria-label="Seções">
+      <a href="#maquete">Maquete 3D</a><a href="#proposta">Proposta</a><a href="#terreno">Terreno</a><a href="#programa">Programa</a><a href="#partido">Partido</a>
+      <a href="#ambientes">Ambientes</a><a href="#plantas">Plantas</a><a href="#pranchas">Pranchas</a><a href="#documentos">Documentos</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="sec maq-sec" id="maquete"><div class="wrap">
+  <div class="cab maq-cab"><span class="eb">TRIENG · Tema 08 · Maquete digital interativa</span><h1>Centro de Convivência da Pessoa Idosa</h1><p>Escolha um ponto de vista ou arraste para girar; o corte mostra o térreo por dentro. Role a página para ver o projeto completo.</p></div>
+  <div class="maq" id="maq">
+    <canvas id="tela3d" aria-label="Maquete 3D interativa"></canvas>
+    <div class="estado" id="estado">Carregando a maquete</div>
+    <div class="ctl" id="vistas">
+      <button type="button" id="v-geral" data-vista="geral" aria-pressed="true">Geral</button>
+      <button type="button" id="v-chegada" data-vista="chegada" aria-pressed="false">Chegada</button>
+      <button type="button" id="v-patio" data-vista="patio" aria-pressed="false">Pátio</button>
+      <button type="button" id="v-piscina" data-vista="piscina" aria-pressed="false">Piscina</button>
+      <button type="button" id="v-ambulancia" data-vista="ambulancia" aria-pressed="false">Ambulância</button>
+      <button type="button" id="v-planta" data-vista="planta" aria-pressed="false">Planta</button>
+    </div>
+    <div class="ctl b">
+      <button type="button" id="k-corte" data-k="corte" aria-pressed="false">Corte do térreo</button>
+      <button type="button" id="k-arvores" data-k="arvores" aria-pressed="true">Árvores</button>
+      <button type="button" id="k-mobiliario" data-k="mobiliario" aria-pressed="true">Mobiliário</button>
+    </div>
+  </div>
+  <p class="maq-nota">Arraste para girar, role ou pince para aproximar, botão direito ou dois dedos para mover. Cores, vegetação e veículos são ilustrativos. <a href="#inicio">Ver o projeto ↓</a></p>
+</div></section>
+<section class="capa" id="inicio">
+  <div class="capa-img"><img src="img/aerea.jpg" alt="Vista aérea da maquete do centro de convivência"></div>
+  <svg class="barras" viewBox="0 0 260 120" aria-hidden="true"><path d="M60 120 130 0h40L100 120Z" fill="#f06a23"/><path d="M120 120 190 0h14l-70 120Z" fill="#f8f6f2" opacity=".5"/><path d="M160 120 230 0h8l-70 120Z" fill="#b9b2a9" opacity=".6"/></svg>
+  <div class="wrap">
+    <div class="txt">
+      <span class="pill">ESTUDO PRELIMINAR · TEMA 08</span>
+      <h1>Centro de Convivência da Pessoa Idosa</h1>
+      <p class="lead">Um centro-dia para 80 idosos pensado como uma casa com quintal: varandas no lugar de corredores, pátio de convivência e um bosque em volta.</p>
+      <div class="kpis">
+        <div class="kpi"><b>80</b><small>idosos por dia</small></div>
+        <div class="kpi"><b>5.688 m²</b><small>quadra inteira</small></div>
+        <div class="kpi"><b>1.673 m²</b><small>área construída</small></div>
+        <div class="kpi"><b>Térreo + 1</b><small>pavimentos</small></div>
+      </div>
+    </div>
+    <div class="faixa">
+      <div><b>Local</b>Terreno B · Maranhão Novo · Imperatriz-MA</div>
+      <div><b>Disciplina</b>Arquitetura e Urbanismo · Prof. Paulo Beckman</div>
+      <div><b>Instituição</b>IFMA Campus Imperatriz</div>
+      <div><b>Data</b>Novembro de 2026 · Revisão 00</div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="proposta"><div class="wrap">
+  <div class="cab"><span class="eb">01 · A proposta</span><h2>Casa com quintal</h2><p>O centro funciona como centro-dia: o idoso chega às 7h30, passa o dia em atividades, refeições, cuidado e descanso, e volta para casa às 17h30. Por isso não há dormitórios.</p></div>
+  <div class="g2">
+    <div class="texto">
+      <p class="conceito">O idoso chega pela varanda, convive em volta do pátio e caminha à sombra do quintal.</p>
+      <p>A ideia vem da casa maranhense, que vive na varanda, na rede e no quintal. O programa pede um lugar que pareça casa e não clínica, com convivência ao ar livre e proteção do sol. O conceito aparece em três elementos: a galeria (a varanda), o pátio social (o terreiro de encontro) e o jardim com pista, horta, piscina e redário (o quintal).</p>
+      <p>A acessibilidade da NBR 9050 conduz o desenho: rota acessível contínua e coberta, portas largas, apoios, luz natural e sanitários a menos de 50 m de qualquer atividade. O percurso mais longo do idoso tem cerca de 45 m.</p>
+    </div>
+    <div class="quadro"><img src="img/patio_varandas.jpg" alt="Pátio social com as varandas em balanço" data-zoom><p class="leg">Pátio social visto do jardim, com as varandas em balanço.</p></div>
+  </div>
+  <div class="decis">
+    <div><i>Implantação</i><b>Edifício na metade norte</b><span>Recuado 4 m das quatro frentes. Entrada pela R. Dr. Itamar Guará, serviço pela R. São Paulo, quintal a leste, de onde vem o vento.</span></div>
+    <div><i>Circulação</i><b>Sem corredor fechado</b><span>Varandas de 3 m em balanço contornam o pátio, sombreiam as paredes e ligam todas as atividades.</span></div>
+    <div><i>Setorização</i><b>Serviço com acesso próprio</b><span>Equipe e idosos só se encontram no balcão do refeitório. O bloco de serviço protege o prédio do sol da tarde.</span></div>
+    <div><i>Volumetria</i><b>Térreo baixo, dois volumes que sobem</b><span>O pavimento superior marca a entrada; o salão multiuso sobe a 6 m de pé-direito.</span></div>
+    <div><i>Clima</i><b>Ventilação cruzada</b><span>Alas estreitas, U aberto para o vento leste, beirais e varandas protegendo as janelas.</span></div>
+    <div><i>Cuidado</i><b>Enfermaria no fundo</b><span>Saída de maca direto para um retorno em gota da ambulância, sem atravessar o prédio.</span></div>
+  </div>
+</div></section>
+
+<section class="sec alt" id="terreno"><div class="wrap">
+  <div class="cab"><span class="eb">02 · Lugar e legislação</span><h2>Uma quadra inteira no Maranhão Novo</h2><p>Limitada pela R. Dr. Itamar Guará, R. Santa Catarina, R. Dom Cesário e R. São Paulo, a uma quadra da Av. Bernardo Sayão. As quatro frentes separam o acesso público, o serviço, o estacionamento e a emergência.</p></div>
+  <div class="g2">
+    <div class="quadro"><img src="img/satelite.jpg" alt="Vista de satélite da quadra" data-zoom><p class="leg">Vista de satélite da quadra, com o norte para cima. Imagem: Google, 2026.</p></div>
+    <div class="tabela"><table>
+      <thead><tr><th>Parâmetro (LC 003/2004 · ZRMN)</th><th>Exigido</th><th>Projeto</th></tr></thead>
+      <tbody>
+        <tr><td>Uso E1.5 · assistência social</td><td>permitido</td><td><span class="ok">ATENDE</span></td></tr>
+        <tr><td>Área total de edificação (ATME)</td><td class="n">até 180%</td><td class="n">29,4%</td></tr>
+        <tr><td>Área livre mínima</td><td class="n">40%</td><td class="n">73,1%</td></tr>
+        <tr><td>Impermeabilização</td><td class="n">até 80%</td><td class="n">48,9%</td></tr>
+        <tr><td>Afastamento das frentes</td><td class="n">4,00 m</td><td class="n">4,26 m</td></tr>
+        <tr><td>Gabarito</td><td class="n">9 pav.</td><td class="n">2 pav.</td></tr>
+        <tr><td>Vagas (art. 41)</td><td class="n">1 / 100 m²</td><td class="n">23 vagas</td></tr>
+        <tr><td>Pé-direito do salão (Lei 197/1978)</td><td class="n">6,00 m</td><td class="n">6,00 m</td></tr>
+      </tbody></table></div>
+  </div>
+  <div class="g2" style="margin-top:32px">
+    <div class="texto"><h3 style="font-size:1.2rem">Clima quente e úmido, vento de leste</h3>
+      <p>Imperatriz tem máximas médias de cerca de 32 °C, umidade de 70% e chuvas fortes de dezembro a abril. As fachadas longas ficam para norte-noroeste e sul-sudeste; jardim, piscina e redário ficam a leste, para o vento passar pela água e pelas árvores antes de entrar no prédio; o serviço e o estacionamento arborizado ficam a oeste, no sol da tarde.</p></div>
+    <div class="quadro"><img src="img/orientacao.jpg" alt="Orientação do terreno, sol e vento" data-zoom><p class="leg">Orientação do terreno, sol e vento (estudo da equipe).</p></div>
+  </div>
+</div></section>
+
+<section class="sec" id="programa"><div class="wrap">
+  <div class="cab"><span class="eb">03 · Programa de necessidades</span><h2>Cinco setores e 1.039 m² úteis</h2><p>Cada área saiu do layout dos móveis, com as faixas de uso e de passagem da NBR 9050. T = térreo, S = superior.</p></div>
+  <div class="setores" id="setores"></div>
+  <div class="trio">
+    <div class="quadro"><img src="img/setorizacao.jpg" alt="Setorização" data-zoom><p class="leg">Setorização</p></div>
+    <div class="quadro"><img src="img/organograma.jpg" alt="Organograma" data-zoom><p class="leg">Organograma</p></div>
+    <div class="quadro"><img src="img/fluxograma.jpg" alt="Fluxograma" data-zoom><p class="leg">Fluxograma: idosos, equipe e serviço por caminhos separados</p></div>
+  </div>
+</div></section>
+
+<section class="sec alt" id="partido"><div class="wrap">
+  <div class="cab"><span class="eb">04 · Partido arquitetônico</span><h2>Dois pátios em U aberto para o jardim leste</h2><p>Entre três alternativas (barra linear, pavilhões e dois pátios), a C é a única em que o conceito aparece inteiro, os fluxos de idosos e de serviço não se cruzam e nenhum ambiente fica a mais de 50 m do salão ou dos sanitários.</p></div>
+  <div class="quadro"><img src="img/alternativas.jpg" alt="As três alternativas de partido" data-zoom><p class="leg">As três alternativas sobre o terreno, na mesma escala.</p></div>
+  <div class="g2" style="margin-top:24px">
+    <div class="quadro"><img src="img/partido.jpg" alt="Partido escolhido" data-zoom><p class="leg">Partido escolhido.</p></div>
+    <div class="quadro"><img src="img/moodboard.jpg" alt="Moodboard dos ambientes" data-zoom><p class="leg">Materiais de casa: reboco off-white, telha cerâmica, madeira cumaru, piso terracota e uma cor por ala para o idoso se localizar.</p></div>
+  </div>
+</div></section>
+
+
+
+<section class="sec" id="ambientes"><div class="wrap">
+  <div class="cab"><span class="eb">05 · Ambiente por ambiente</span><h2>Um dia no centro, de setor em setor</h2><p>Na ordem em que o idoso percorre o centro: chega pela frente, passa pelo estar, refeitório e salão, segue pela varanda até as oficinas, a piscina e o cuidado, e termina no andar de cima e no serviço.</p></div>
+  <div class="filtros" id="filtros"></div>
+  <div class="amb" id="amb"></div>
+</div></section>
+
+<section class="sec alt" id="plantas"><div class="wrap">
+  <div class="cab"><span class="eb">06 · Plantas humanizadas e isometrias</span><h2>O projeto visto de cima e em corte</h2><p>Plantas e isometrias tiradas da maquete, com o mobiliário das pranchas de layout.</p></div>
+  <div class="gal" id="gal"></div>
+</div></section>
+
+<section class="sec" id="pranchas"><div class="wrap">
+  <div class="cab"><span class="eb">07 · Pranchas técnicas</span><h2>Doze pranchas A2</h2><p>Implantação, plantas baixas, layout, cobertura, cortes e fachadas, cada uma com planta-chave. Clique para abrir em tela cheia e clique de novo para ampliar. Nas medidas, valem as pranchas.</p></div>
+  <div class="pr" id="pr"></div>
+</div></section>
+
+<section class="sec alt" id="documentos"><div class="wrap">
+  <div class="cab"><span class="eb">08 · Documentos da entrega</span><h2>Os arquivos completos em PDF</h2><p>Os mesmos arquivos entregues ao professor, nomeados como pede o roteiro.</p></div>
+  <div class="docs">
+    <a class="doc" href="docs/Tema08_Pranchas_ARQ-01_a_06.pdf" target="_blank" rel="noopener"><b>Pranchas ARQ-01 a 06</b><small>Implantação, situação e plantas baixas · A2</small><span>Abrir PDF</span></a>
+    <a class="doc" href="docs/Tema08_Pranchas_ARQ-07_a_12.pdf" target="_blank" rel="noopener"><b>Pranchas ARQ-07 a 12</b><small>Superior, cobertura, cortes, fachadas e layout · A2</small><span>Abrir PDF</span></a>
+    <a class="doc" href="docs/Tema08_Memorial.pdf" target="_blank" rel="noopener"><b>Memorial descritivo</b><small>Programa, legislação, partido, projeto e referências</small><span>Abrir PDF</span></a>
+    <a class="doc" href="docs/Tema08_Caderno.pdf" target="_blank" rel="noopener"><b>Caderno do projeto</b><small>Apresentação em A4 com o passeio pelos ambientes</small><span>Abrir PDF</span></a>
+    <a class="doc" href="docs/Tema08_Maquete.pdf" target="_blank" rel="noopener"><b>Maquete volumétrica</b><small>Vistas, plantas humanizadas e isometrias em A4</small><span>Abrir PDF</span></a>
+  </div>
+</div></section>
+</main>
+
+<footer><div class="wrap">
+  <svg viewBox="0 0 28 26" width="44" height="41" aria-hidden="true"><path d="M14 1 27 25H1Z" fill="#f8f6f2"/><path d="M8.5 14h11v3.2h-3.8V25h-3.4v-7.8H8.5Z" fill="#2b2b2b"/><path d="M16 6.5l3.2 5.6" stroke="#f06a23" stroke-width="2.6"/></svg>
+  <h2>Três visões, <em>uma solução.</em></h2>
+  <div class="equipe">
+    <div><small>Equipe</small><b>Guilherme Araújo Valença</b></div>
+    <div><small>Equipe</small><b>Pedro Henrique Carvalho Guimarães</b></div>
+    <div><small>Equipe</small><b>Eduardo Araújo Macário da Silva</b></div>
+  </div>
+  <p>TRIENG Engenharia e Arquitetura · Arquitetura e Urbanismo · Prof. Paulo Beckman · IFMA Campus Imperatriz · Outubro a novembro de 2026. Imagens do projeto são ilustrativas.</p>
+</div></footer>
+
+<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Visualizador de imagem">
+  <div class="bar"><p id="lb-t"></p><button type="button" id="lb-ant">Anterior</button><button type="button" id="lb-prox">Próxima</button><button type="button" id="lb-x">Fechar</button></div>
+  <div class="vp" id="lb-vp"><img id="lb-img" alt=""></div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  var $ = function (id) { return document.getElementById(id); };
+  var SET = {
+    acolhimento: ["Acolhimento e administração", "#7d9bc4"], atividades: ["Atividades", "#8fae6f"], convivencia: ["Convivência e descanso", "#d2a35c"],
+    cuidado: ["Cuidado e higiene", "#c48390"], servico: ["Serviço e equipe", "#9c958c"], externo: ["Áreas externas", "#5f9c8f"]
+  };
+  var PROG = [
+    ["acolhimento", [["Estar e recepção", "T", "56,20"], ["Hall, escada e elevador", "T+S", "65,48"], ["Atendimento social", "T", "10,97"], ["Administração", "S", "23,52"], ["Reuniões", "S", "18,67"], ["Arquivo", "S", "12,97"], ["Sanitário 2", "S", "3,98"], ["Guarita e WC", "Ext.", "7,86"]]],
+    ["atividades", [["Salão multiuso", "T", "149,97"], ["Depósito do salão", "T", "8,23"], ["Camarim", "T", "12,90"], ["Técnico de som", "T", "12,90"], ["Artesanato", "T", "62,55"], ["Ginástica e fisioterapia", "T", "77,32"], ["Oficina de música", "S", "42,92"], ["Leitura e contemplação", "S", "47,35"]]],
+    ["convivencia", [["Refeitório (80 lugares)", "T", "128,57"], ["Repouso", "T", "33,97"], ["Estar e copa", "S", "18,10"]]],
+    ["cuidado", [["Enfermaria", "T", "23,52"], ["Sanitário da enfermaria", "T", "4,35"], ["Espera", "T", "6,70"], ["Vestiário das idosas", "T", "35,95"], ["Vestiário dos idosos", "T", "32,01"], ["Sanitários acessíveis 1 e 2", "T", "15,74"], ["Sanitário dos idosos", "S", "4,35"]]],
+    ["servico", [["Recebimento", "T", "10,22"], ["Despensa", "T", "10,82"], ["Cozinha", "T", "37,15"], ["Lavanderia", "T", "11,22"], ["DML", "T+S", "8,20"], ["Vestiários da equipe", "T", "30,42"], ["Copa da equipe", "T", "12,90"]]]
+  ];
+  var num = function (s) { return parseFloat(s.replace(".", "").replace(",", ".")); };
+  var br = function (v) { return v.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 }); };
+  $("setores").innerHTML = PROG.map(function (g) {
+    var tot = g[1].reduce(function (s, r) { return s + num(r[2]); }, 0);
+    return '<div class="setor" style="--c:' + SET[g[0]][1] + '"><h3>' + SET[g[0]][0] + '<span>' + br(tot) + ' m²</span></h3><table><tbody>' +
+      g[1].map(function (r) { return '<tr><td>' + r[0] + '</td><td class="p">' + r[1] + '</td><td class="n">' + r[2] + '</td></tr>'; }).join("") + '</tbody></table></div>';
+  }).join("");
+
+  var AMB = [
+    ["chegada", "Chegada e embarque coberto", "externo", "Térreo", "75,00 m²", "As vans param sob um embarque coberto de 15 × 5 m. O idoso desce sem pegar sol ou chuva e entra pelo alpendre direto no estar e recepção."],
+    ["recepcao", "Estar e recepção", "acolhimento", "Térreo", "56,20 m²", "Balcão rebaixado a 0,80 m, guarda-volumes de 20 nichos, bebedouro e sala de espera com sofá e poltronas. Ao lado, escada e elevador para 10 pessoas."],
+    ["refeitorio", "Refeitório", "convivencia", "Térreo", "128,57 m²", "80 lugares em mesas de 12 e de 4, lavatório coletivo na entrada. A cozinha serve por um balcão em meia-parede, o único contato entre equipe e idosos."],
+    ["salao", "Salão multiuso", "atividades", "Térreo", "149,97 m²", "Pé-direito de 6 m, palco central de 6,00 × 3,50 m com rampa, camarim e técnico de som dos lados. Até 100 cadeiras; vira pista de dança nas festas."],
+    ["jardim", "Pátio social e jardim sensorial", "externo", "Externo", "286 m² de varandas", "Pergolado com bancos, espelho d'água e canteiros de aromáticas, cercado pelas varandas que fazem a circulação coberta."],
+    ["artesanato", "Artesanato", "atividades", "Térreo", "62,55 m²", "Mesas largas para 22 pessoas com vaga para cadeira de rodas, bancada com pia e portas de correr para a varanda."],
+    ["ginastica", "Ginástica e fisioterapia", "atividades", "Térreo", "77,32 m²", "Colchonetes, barras, macas, bicicletas, espelho e piso emborrachado. Exercício de baixo impacto ao lado da piscina."],
+    ["piscina", "Vestiários e piscina", "cuidado", "Térreo", "35,95 + 32,01 m²", "Vestiários acessíveis com banco nos chuveiros e trocador. Uma passagem aberta de 2,20 m leva à piscina de hidroginástica de 12,50 × 6,00 m."],
+    ["enfermaria", "Atendimento e enfermaria", "cuidado", "Térreo", "23,52 m²", "Dois leitos de observação, pia, medicamentos e sanitário acessível, com saída de maca direto para a ambulância."],
+    ["repouso", "Repouso", "convivencia", "Térreo", "33,97 m²", "Oito poltronas reclináveis e pufes, sem camas. O descanso depois do almoço, aberto para o redário."],
+    ["redario", "Redário", "convivencia", "Térreo", "62,00 m²", "Dez redes em duas fileiras, sob forro de madeira, semiaberto para o vento leste."],
+    ["ambulancia", "Acesso da ambulância", "externo", "Externo", "faixa de 4,00 m", "Retorno em gota pela R. Santa Catarina: a ambulância entra, para junto à enfermaria e sai de frente."],
+    ["musica", "Oficina de música", "atividades", "Superior", "42,92 m²", "Vinte cadeiras em semicírculo, teclado e instrumentos, no andar de cima, longe das atividades silenciosas."],
+    ["leitura", "Leitura e contemplação", "atividades", "Superior", "47,35 m²", "Estantes, computadores, mesas de leitura e poltronas, abrindo para a varanda-mirante sobre o jardim."],
+    ["superior", "Administração e reuniões", "acolhimento", "Superior", "23,52 + 18,67 m²", "Administração, reuniões para 11 pessoas, arquivo e sanitário, do outro lado do hall."],
+    ["servico", "Serviço e equipe", "servico", "Térreo", "37,15 m² de cozinha", "Recebimento, despensa e cozinha em marcha avante, vestiários, copa e lavanderia com entrada própria pela R. São Paulo."]
+  ];
+  var filtro = "todos";
+  function desenharAmb() {
+    $("amb").innerHTML = AMB.filter(function (a) { return filtro === "todos" || a[2] === filtro; }).map(function (a) {
+      var i = AMB.indexOf(a);
+      return '<article><img src="img/' + a[0] + '.jpg" alt="' + a[1] + '" loading="lazy" data-zoom data-grupo="amb" data-leg="' + (i + 1) + '. ' + a[1] + '"><div class="c"><div class="t"><h3>' + (i + 1) + '. ' + a[1] + '</h3><span class="a">' + a[4] + '</span></div>' +
+        '<div class="tags"><span class="tag" style="--c:' + SET[a[2]][1] + '"><i></i>' + SET[a[2]][0] + '</span><span class="tag">' + a[3] + '</span></div><p>' + a[5] + '</p></div></article>';
+    }).join("");
+  }
+  $("filtros").innerHTML = '<button type="button" class="chip" id="fl-todos" data-f="todos" aria-pressed="true">Todos</button>' +
+    Object.keys(SET).map(function (k) { return '<button type="button" class="chip" id="fl-' + k + '" data-f="' + k + '" aria-pressed="false">' + SET[k][0] + '</button>'; }).join("");
+  $("filtros").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-f]"); if (!b) return; filtro = b.dataset.f;
+    document.querySelectorAll("[data-f]").forEach(function (x) { x.setAttribute("aria-pressed", String(x === b)); }); desenharAmb();
+  });
+  desenharAmb();
+
+  var GAL = [["hum_terreo", "Planta humanizada do térreo", "Tudo o que o idoso usa no dia a dia, em nível, em volta do pátio."], ["hum_superior", "Planta humanizada do superior", "Música, estar e copa, leitura, administração, reuniões e arquivo."],
+    ["hum_central", "Setor central", "Serviço, refeitório, estar e recepção, hall e varandas."], ["hum_leste", "Ala leste", "Salão, artesanato, ginástica, vestiários, cuidado, repouso e redário."],
+    ["iso_salao", "Isometria do salão multiuso", "Palco central, camarim e técnico de som."], ["iso_atividades", "Isometria de artesanato e ginástica", "As duas oficinas abertas para a varanda."],
+    ["iso_vestiarios", "Isometria de vestiários e piscina", "Passagem aberta de 2,20 m até o deque."], ["iso_servico", "Isometria do serviço", "Cozinha, despensa, vestiários, copa e lavanderia da equipe."],
+    ["iso_superior", "Isometria do pavimento superior", "Varanda-mirante voltada para o jardim."], ["materiais", "Amostras de materiais", "Materiais aplicados na maquete; cores ilustrativas."]];
+  $("gal").innerHTML = GAL.map(function (g) { return '<figure><img src="img/' + g[0] + '.jpg" alt="' + g[1] + '" loading="lazy" data-zoom data-grupo="gal" data-leg="' + g[1] + '"><figcaption><b>' + g[1] + '.</b> ' + g[2] + '</figcaption></figure>'; }).join("");
+
+  var PR = [["ARQ-01", "Implantação e índices urbanísticos", "1:250"], ["ARQ-02", "Planta geral do térreo e situação", "1:200 · 1:1000"], ["ARQ-03", "Térreo: setor central", "1:100"], ["ARQ-04", "Térreo: serviço e equipe; guarita", "1:100 · 1:50"],
+    ["ARQ-05", "Térreo: salão e ala leste", "1:100"], ["ARQ-06", "Planta e layout: cuidado e repouso", "1:100"], ["ARQ-07", "Planta e layout do superior", "1:100"], ["ARQ-08", "Planta de cobertura", "1:200"],
+    ["ARQ-09", "Cortes AA, BB e CC", "1:200"], ["ARQ-10", "Fachadas", "1:200"], ["ARQ-11", "Layout: setor central, serviço e guarita", "1:100 · 1:50"], ["ARQ-12", "Layout: salão e ala leste", "1:100"]];
+  $("pr").innerHTML = PR.map(function (p, i) {
+    var n = String(i + 1).padStart(2, "0");
+    return '<button type="button" id="pr-' + n + '" data-zoom data-src="pranchas/arq' + n + '.jpg" data-grupo="pr" data-leg="' + p[0] + ' · ' + p[1] + ' · ' + p[2] + '"><img src="pranchas/arq' + n + '_t.jpg" alt="' + p[0] + ' ' + p[1] + '" loading="lazy"><span class="k">' + p[0] + '<span>' + p[2] + '</span></span><span class="d">' + p[1] + '</span></button>';
+  }).join("");
+
+  // visualizador
+  var lb = $("lb"), lbi = $("lb-img"), vp = $("lb-vp"), lista = [], pos = 0, origem = null;
+  function mostrar() { var el = lista[pos]; lbi.src = el.dataset.src || el.getAttribute("src"); lbi.alt = el.dataset.leg || el.alt || ""; $("lb-t").textContent = (el.dataset.leg || el.alt || "") + "  (" + (pos + 1) + " / " + lista.length + ")"; vp.classList.remove("zoom"); vp.scrollTo(0, 0); }
+  document.addEventListener("click", function (e) {
+    var el = e.target.closest("[data-zoom]"); if (!el || lb.contains(el)) return;
+    var g = el.dataset.grupo; lista = g ? Array.prototype.slice.call(document.querySelectorAll('[data-grupo="' + g + '"]')) : [el];
+    pos = Math.max(0, lista.indexOf(el)); origem = el; lb.hidden = false; document.body.style.overflow = "hidden"; mostrar(); $("lb-x").focus();
+  });
+  function fechar() { lb.hidden = true; document.body.style.overflow = ""; if (origem) origem.focus(); }
+  $("lb-x").addEventListener("click", fechar);
+  $("lb-ant").addEventListener("click", function () { pos = (pos - 1 + lista.length) % lista.length; mostrar(); });
+  $("lb-prox").addEventListener("click", function () { pos = (pos + 1) % lista.length; mostrar(); });
+  lbi.addEventListener("click", function () { vp.classList.toggle("zoom"); });
+  vp.addEventListener("click", function (e) { if (e.target === vp) fechar(); });
+  document.addEventListener("keydown", function (e) {
+    if (lb.hidden) return;
+    if (e.key === "Escape") fechar(); else if (e.key === "ArrowRight") $("lb-prox").click(); else if (e.key === "ArrowLeft") $("lb-ant").click();
+  });
+})();
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+<script>
+(function () {
+  "use strict";
+  var $ = function (id) { return document.getElementById(id); };
+  var box = $("maq"), canvas = $("tela3d"), estado = $("estado");
+  var CAM = { arvores: ["copa", "copa3", "tronco", "flor"], mobiliario: ["tecido", "tecido2", "tecido3", "couro", "colchonete", "rede", "armario", "estante", "bancada", "inox", "branco", "metal", "cromo", "preto", "madeira"] };
+  var ARESTAS = ["parede", "fachada", "telha", "termo", "caixilho", "laje"];
+  var CHAO = ["grama", "calcada", "asfalto", "intertravado", "concregrama", "pista", "porcelanato", "ladrilho", "madeira_piso", "varanda_piso", "deck", "agua", "terra", "pastilha", "borracha", "tatil", "pedra_clara"];
+  var VISTAS = { geral: [[-78, 72, -92], [0, 0, -2]], chegada: [[-24, 1.7, -40], [-6, 3, -22]], patio: [[6, 1.7, 13], [0, 3.2, -7]], piscina: [[42.6, 1.7, -4], [26, 1.6, 2.4]], ambulancia: [[53, 2.2, 24], [34, 1.2, 13]], planta: [[0, 150, 0.01], [0, 0, 0]] };
+  if (!window.THREE || !THREE.OrbitControls || !THREE.GLTFLoader) { estado.textContent = "Não foi possível carregar o visualizador 3D. Recarregue a página."; return; }
+  var r; try { r = new THREE.WebGLRenderer({ canvas: canvas, antialias: true }); } catch (e) { estado.textContent = "Este navegador não abriu o 3D (WebGL desativado)."; return; }
+  r.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2)); r.outputEncoding = THREE.sRGBEncoding; r.shadowMap.enabled = true; r.shadowMap.type = THREE.PCFSoftShadowMap;
+  var scene = new THREE.Scene(), cam = new THREE.PerspectiveCamera(38, 1, 0.5, 1500), ctl = new THREE.OrbitControls(cam, canvas);
+  ctl.maxPolarAngle = Math.PI * .495; ctl.minDistance = 2; ctl.maxDistance = 320; ctl.screenSpacePanning = true; ctl.enableZoom = true;
+  scene.add(new THREE.HemisphereLight(0xf4f7fa, 0x7a8466, .85));
+  var sol = new THREE.DirectionalLight(0xfff2de, .95); sol.position.set(-60, 90, 50); sol.castShadow = true; sol.shadow.mapSize.set(4096, 4096);
+  var sc = sol.shadow.camera; sc.left = -75; sc.right = 75; sc.top = 75; sc.bottom = -75; sc.near = 1; sc.far = 300; sol.shadow.bias = -.0004; scene.add(sol);
+  var corte = new THREE.Plane(new THREE.Vector3(0, -1, 0), 3.2), grupos = {};
+  function draw() { r.render(scene, cam); }
+  function tema() { var c = new THREE.Color(getComputedStyle(document.documentElement).getPropertyValue("--sky").trim() || "#e9eef0"); scene.background = c; scene.fog = new THREE.Fog(c, 240, 650); draw(); }
+  function fit() { var w = box.clientWidth, h = box.clientHeight; if (!w || !h) return; r.setSize(w, h, false); cam.aspect = w / h; cam.updateProjectionMatrix(); draw(); }
+  var q = 0, reduz = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function ir(n) {
+    var v = VISTAS[n]; document.querySelectorAll("[data-vista]").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.vista === n)); });
+    var p0 = cam.position.clone(), a0 = ctl.target.clone(), p1 = new THREE.Vector3().fromArray(v[0]), a1 = new THREE.Vector3().fromArray(v[1]);
+    cancelAnimationFrame(q);
+    if (reduz) { cam.position.copy(p1); ctl.target.copy(a1); ctl.update(); draw(); return; }
+    var t0 = performance.now();
+    (function passo(t) { var k = Math.min(1, ((t || t0) - t0) / 850), e = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+      cam.position.lerpVectors(p0, p1, e); ctl.target.lerpVectors(a0, a1, e); ctl.update(); draw(); if (k < 1) q = requestAnimationFrame(passo); })();
+  }
+  document.querySelectorAll("[data-vista]").forEach(function (b) { b.addEventListener("click", function () { ir(b.dataset.vista); }); });
+  document.querySelectorAll("[data-k]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var on = b.getAttribute("aria-pressed") !== "true"; b.setAttribute("aria-pressed", String(on));
+      if (b.dataset.k === "corte") r.clippingPlanes = on ? [corte] : [];
+      else (grupos[b.dataset.k] || []).forEach(function (o) { o.visible = on; });
+      draw();
+    });
+  });
+  ctl.addEventListener("change", draw);
+  ctl.addEventListener("start", function () { cancelAnimationFrame(q); document.querySelectorAll("[data-vista]").forEach(function (b) { b.setAttribute("aria-pressed", "false"); }); });
+  if (window.ResizeObserver) new ResizeObserver(fit).observe(box);
+  window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", tema);
+  new MutationObserver(tema).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+  cam.position.fromArray(VISTAS.geral[0]); ctl.target.fromArray(VISTAS.geral[1]); ctl.update(); tema(); fit();
+  new THREE.GLTFLoader().load("maquete.json", function (g) {
+    var linhas = [];
+    g.scene.updateMatrixWorld(true);
+    g.scene.traverse(function (o) {
+      if (!o.isMesh) return;
+      var m = o.material, n = (m && m.name) || ""; m.side = THREE.DoubleSide;
+      if (m.transparent || m.opacity < 1) { m.depthWrite = false; o.renderOrder = 2; } else { o.castShadow = CHAO.indexOf(n) < 0; o.receiveShadow = true; }
+      if (m.metalness !== undefined) { m.metalness = Math.min(m.metalness, .1); m.roughness = Math.max(m.roughness, .75); }
+      var objs = [o];
+      if (ARESTAS.indexOf(n) >= 0) { var l = new THREE.LineSegments(new THREE.EdgesGeometry(o.geometry, 28), new THREE.LineBasicMaterial({ color: 0x2b2b2b, transparent: true, opacity: .32 })); l.applyMatrix4(o.matrixWorld); objs.push(l); linhas.push(l); }
+      Object.keys(CAM).forEach(function (k) { if (CAM[k].indexOf(n) >= 0) grupos[k] = (grupos[k] || []).concat(objs); });
+    });
+    scene.add(g.scene); linhas.forEach(function (l) { scene.add(l); });
+    estado.hidden = true; fit();
+  }, undefined, function () { estado.textContent = "Não foi possível carregar a maquete. Recarregue a página."; });
+})();
+</script>
+
+</body>
+</html>
